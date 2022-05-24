@@ -648,7 +648,7 @@ void performHeapSort(vector<double> vector)
 
 }
 
-void SortSim(void)
+void SortOptions(void)
 {
 	vector<double> vector;
 	do
