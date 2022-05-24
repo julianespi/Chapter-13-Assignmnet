@@ -75,6 +75,16 @@ public:
             return false;
     }
 
+    bool operator >(const studentInfo& right)
+    {
+        if (id > right.id)
+        {
+            return true;
+        }
+        else
+            return false;
+    }
+
     friend ostream& operator <<(ostream& out, const studentInfo& obj);
 };
 //overloaded cout operator
@@ -92,7 +102,7 @@ void swap(studentInfo* xp, studentInfo* yp)
     *yp = temp;
 }
 
-void selectionSort(vector<studentInfo>& studentList, int n)
+void selectionSortAscendingID(vector<studentInfo>& studentList, int n)
 {
     int i, j, min_idx;
 
@@ -105,7 +115,95 @@ void selectionSort(vector<studentInfo>& studentList, int n)
         // unsorted array
         min_idx = i;
         for (j = i + 1; j < n; j++)
-            if (studentList[j] < studentList[min_idx])
+            if (studentList[j].getID() < studentList[min_idx].getID())
+                min_idx = j;
+
+        // Swap the found minimum element
+        // with the first element
+        swap(&studentList[min_idx], &studentList[i]);
+    }
+}
+
+void selectionSortAscendingName(vector<studentInfo>& studentList, int n)
+{
+    int i, j, min_idx;
+
+    // One by one move boundary of
+    // unsorted subarray
+    for (i = 0; i < n - 1; i++)
+    {
+
+        // Find the minimum element in
+        // unsorted array
+        min_idx = i;
+        for (j = i + 1; j < n; j++)
+            if (studentList[j].getName() < studentList[min_idx].getName())
+                min_idx = j;
+
+        // Swap the found minimum element
+        // with the first element
+        swap(&studentList[min_idx], &studentList[i]);
+    }
+}
+
+void selectionSortAscendingMajor(vector<studentInfo>& studentList, int n)
+{
+    int i, j, min_idx;
+
+    // One by one move boundary of
+    // unsorted subarray
+    for (i = 0; i < n - 1; i++)
+    {
+
+        // Find the minimum element in
+        // unsorted array
+        min_idx = i;
+        for (j = i + 1; j < n; j++)
+            if (studentList[j].getMajor() < studentList[min_idx].getMajor())
+                min_idx = j;
+
+        // Swap the found minimum element
+        // with the first element
+        swap(&studentList[min_idx], &studentList[i]);
+    }
+}
+
+void selectionSortAscendingGPA(vector<studentInfo>& studentList, int n)
+{
+    int i, j, min_idx;
+
+    // One by one move boundary of
+    // unsorted subarray
+    for (i = 0; i < n - 1; i++)
+    {
+
+        // Find the minimum element in
+        // unsorted array
+        min_idx = i;
+        for (j = i + 1; j < n; j++)
+            if (studentList[j].getGPA() < studentList[min_idx].getGPA())
+                min_idx = j;
+
+        // Swap the found minimum element
+        // with the first element
+        swap(&studentList[min_idx], &studentList[i]);
+    }
+}
+
+void selectionSortDecendingID(vector<studentInfo>& studentList, int n)
+{
+    int i, j, min_idx;
+
+    // One by one move boundary of
+    // unsorted subarray
+    for (i = 0; i < n - 1; i++)
+    {
+
+        // Find the minimum element in
+        // unsorted array
+        min_idx = i;
+        for (j = i + 1; j < n; j++)
+            if (studentList[j].getGPA()*-1 < studentList[min_idx].getGPA()*-1)
                 min_idx = j;
 
         // Swap the found minimum element
@@ -200,24 +298,28 @@ void removeRecord(vector<studentInfo>& studentList)
     cout << "The student record cannot be found to be removed." << endl;
 }
 
-void ascendingIDsort()
+void ascendingIDsort(vector<studentInfo>& studentList)
 {
     cout << "sorted in ascending order by ID. " << endl;
+    selectionSortAscendingID(studentList, studentList.size());
 }
 
-void ascendingNameSort()
+void ascendingNameSort(vector<studentInfo>& studentList)
 {
     cout << "sorted in ascending order by Name. " << endl;
+    selectionSortAscendingName(studentList, studentList.size());
 }
 
-void ascendingMajorSort()
+void ascendingMajorSort(vector<studentInfo>& studentList)
 {
     cout << "sorted in ascending order by Major. " << endl;
+    selectionSortAscendingMajor(studentList, studentList.size());
 }
 
-void ascendingGPASort()
+void ascendingGPASort(vector<studentInfo>& studentList)
 {
     cout << "sorted in ascending order by GPA. " << endl;
+    selectionSortAscendingGPA(studentList, studentList.size());
 }
 
 int ascendingsortsMenuOption()
@@ -228,16 +330,16 @@ int ascendingsortsMenuOption()
     return options;
 }
 
-void ascendingsorts()
+void ascendingsorts(vector<studentInfo>& studentList)
 {
     do
     {
         switch (ascendingsortsMenuOption())
         {
-        case 1: ascendingIDsort(); return;
-        case 2: ascendingNameSort(); return;
-        case 3: ascendingMajorSort(); return;
-        case 4: ascendingGPASort(); return;
+        case 1: ascendingIDsort(studentList); return;
+        case 2: ascendingNameSort(studentList); return;
+        case 3: ascendingMajorSort(studentList); return;
+        case 4: ascendingGPASort(studentList); return;
         default: cout << "\t\tERROR - Invalid option. Please re-enter."; break;
         }
         cout << "\n";
@@ -247,22 +349,23 @@ void ascendingsorts()
 
 }
 
-void descendingIDsort()
+void descendingIDsort(vector<studentInfo>& studentList)
 {
     cout << "sorted in descending order by ID. " << endl;
+    selectionSortDecendingID(studentList, studentList.size());
 }
 
-void descendingNameSort()
+void descendingNameSort(vector<studentInfo>& studentList)
 {
     cout << "sorted in descending order by Name. " << endl;
 }
 
-void descendingMajorSort()
+void descendingMajorSort(vector<studentInfo>& studentList)
 {
     cout << "sorted in descending order by Major. " << endl;
 }
 
-void descendingGPASort()
+void descendingGPASort(vector<studentInfo>& studentList)
 {
     cout << "sorted in descending order by GPA. " << endl;
 }
@@ -275,16 +378,16 @@ int descendingsortsMenuOption()
     return options;
 }
 
-void descendingSorts()
+void descendingSorts(vector<studentInfo>& studentList)
 {
     do
     {
         switch (descendingsortsMenuOption())
         {
-        case 1: descendingIDsort(); return;
-        case 2: descendingNameSort(); return;
-        case 3: descendingMajorSort(); return;
-        case 4: descendingGPASort(); return;
+        case 1: descendingIDsort(studentList); return;
+        case 2: descendingNameSort(studentList); return;
+        case 3: descendingMajorSort(studentList); return;
+        case 4: descendingGPASort(studentList); return;
         default: cout << "\t\tERROR - Invalid option. Please re-enter."; break;
         }
         cout << "\n";
@@ -314,8 +417,8 @@ void sortStudents(vector<studentInfo>& studentList)
     {
         switch (sortMenuOption())
         {
-        case 1: ascendingsorts(); return;
-        case 2: descendingSorts(); return;
+        case 1: ascendingsorts(studentList); return;
+        case 2: descendingSorts(studentList); return;
         default: cout << "\t\tERROR - Invalid option. Please re-enter."; break;
         }
         cout << "\n";
